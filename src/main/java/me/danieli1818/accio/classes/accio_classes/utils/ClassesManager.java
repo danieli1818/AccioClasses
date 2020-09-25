@@ -37,6 +37,7 @@ public class ClassesManager {
 		if (!returnValue) {
 			removeClass(className);
 		}
+		this.playersInClass.put(className, new ArrayList<UUID>());
 		return returnValue;
 	}
 	
@@ -71,6 +72,24 @@ public class ClassesManager {
 	
 	public List<UUID> getPlayersInClass(String className) {
 		return this.playersInClass.get(className);
+	}
+	
+	public void selectClass(UUID uuid, String className) {
+		String prevClassName = getSelectedClass(uuid);
+		this.selectedClasses.put(uuid, className);
+		removeClass(prevClassName);
+	}
+	
+	public boolean addPlayerToClass(Player player, String className) {
+		List<UUID> players = this.playersInClass.get(className);
+		if (players == null) {
+			return false;
+		}
+		if (players.contains(player.getUniqueId())) {
+			return false;
+		}
+		players.add(player.getUniqueId());
+		return true;
 	}
 	
 }

@@ -2,6 +2,8 @@ package me.danieli1818.accio.classes.accio_classes;
 
 import org.bukkit.plugin.java.JavaPlugin;
 
+import me.danieli1818.accio.classes.accio_classes.commands.AccioClassesCommands;
+
 public class AccioClasses extends JavaPlugin {
 
 	@Override
@@ -16,7 +18,7 @@ public class AccioClasses extends JavaPlugin {
 		
 //		FlooNetworkStationsManager.getInstance().reloadStations();
 		
-//		getCommand("floonetwork").setExecutor(FlooNetworkCommands.getInstance());
+		getCommand("accioclasses").setExecutor(new AccioClassesCommands());
 		
 //		getServer().getPluginManager().registerEvents(new FlooNetworkListener(), this);
 		

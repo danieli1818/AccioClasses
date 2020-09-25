@@ -1,0 +1,10 @@
+name: accio-classes
+version: ${project.version}
+main: me.danieli1818.accio.classes.accio_classes.AccioClasses
+authors: [DanielRottner]
+description: Accio Classes Network Plugin For The Harry Potter Classes.
+api-version: 1.16
+
+commands:
+    accioclasses:
+        description: shows help page.

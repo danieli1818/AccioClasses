@@ -8,6 +8,15 @@ public interface SubCommandsExecutor {
 	
 	public String getDescription();
 	
-	public String getHelp(int page);
+	public String[] getHelp(int page);
+	
+	default boolean onHelpCommand(CommandSender sender, int page) {
+		if (getHelp(page) == null) {
+			sender.sendMessage("Invalid page number!");
+			return false;
+		}
+		sender.sendMessage(getHelp(page));
+		return true;
+	}
 	
 }
