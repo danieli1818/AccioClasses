@@ -24,12 +24,21 @@ public class AccioClassesCommands implements CommandExecutor {
 		this.subCommands.put("runcommand", new RunCommandSubCommand("/accioclasses runCommand"));
 		this.subCommands.put("join", new JoinSubCommand("/accioclasses join"));
 		this.subCommands.put("give", new GiveSubCommand("/accioclasses give"));
+		this.subCommands.put("start", new GiveSubCommand("/accioclasses start"));
+		this.subCommands.put("kick", new GiveSubCommand("/accioclasses kick"));
+		this.subCommands.put("dismiss", new GiveSubCommand("/accioclasses dismiss"));
 	}
 
 	public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
+		if (!sender.hasPermission("accio.classes.commands")) {
+			sender.sendMessage("You don't have permissions to run this command!");
+		}
 		if (args.length < 1) {
 			onHelpCommand(1);
 			return true;
+		}
+		if (!sender.hasPermission("accio.classes.commands." + args[0].toLowerCase())) {
+			sender.sendMessage("You don't have permissions to run this command!");
 		}
 		SubCommandsExecutor executor = this.subCommands.get(args[0].toLowerCase());
 		if (executor == null) {

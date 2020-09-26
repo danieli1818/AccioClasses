@@ -3,6 +3,7 @@ package me.danieli1818.accio.classes.accio_classes;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import me.danieli1818.accio.classes.accio_classes.commands.AccioClassesCommands;
+import me.danieli1818.accio.classes.accio_classes.commands.LeaveCommand;
 
 public class AccioClasses extends JavaPlugin {
 
@@ -19,6 +20,8 @@ public class AccioClasses extends JavaPlugin {
 //		FlooNetworkStationsManager.getInstance().reloadStations();
 		
 		getCommand("accioclasses").setExecutor(new AccioClassesCommands());
+		
+		getCommand("leave").setExecutor(new LeaveCommand());
 		
 //		getServer().getPluginManager().registerEvents(new FlooNetworkListener(), this);
 		
