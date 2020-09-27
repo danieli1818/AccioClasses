@@ -8,10 +8,14 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 
 import me.danieli1818.accio.classes.accio_classes.commands.subcommands.CreateSubCommand;
+import me.danieli1818.accio.classes.accio_classes.commands.subcommands.DismissSubCommand;
 import me.danieli1818.accio.classes.accio_classes.commands.subcommands.GiveSubCommand;
 import me.danieli1818.accio.classes.accio_classes.commands.subcommands.JoinSubCommand;
+import me.danieli1818.accio.classes.accio_classes.commands.subcommands.KickSubCommand;
 import me.danieli1818.accio.classes.accio_classes.commands.subcommands.TeleportSubCommand;
+import me.danieli1818.accio.classes.accio_classes.commands.subcommands.ToggleSubCommand;
 import me.danieli1818.accio.classes.accio_classes.commands.subcommands.RunCommandSubCommand;
+import me.danieli1818.accio.classes.accio_classes.commands.subcommands.StartSubCommand;
 
 public class AccioClassesCommands implements CommandExecutor {
 	
@@ -24,9 +28,10 @@ public class AccioClassesCommands implements CommandExecutor {
 		this.subCommands.put("runcommand", new RunCommandSubCommand("/accioclasses runCommand"));
 		this.subCommands.put("join", new JoinSubCommand("/accioclasses join"));
 		this.subCommands.put("give", new GiveSubCommand("/accioclasses give"));
-		this.subCommands.put("start", new GiveSubCommand("/accioclasses start"));
-		this.subCommands.put("kick", new GiveSubCommand("/accioclasses kick"));
-		this.subCommands.put("dismiss", new GiveSubCommand("/accioclasses dismiss"));
+		this.subCommands.put("start", new StartSubCommand("/accioclasses start"));
+		this.subCommands.put("kick", new KickSubCommand("/accioclasses kick"));
+		this.subCommands.put("dismiss", new DismissSubCommand("/accioclasses dismiss"));
+		this.subCommands.put("toggle", new ToggleSubCommand("/accioclasses toggle"));
 	}
 
 	public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {

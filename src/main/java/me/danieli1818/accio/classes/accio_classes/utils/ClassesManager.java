@@ -173,4 +173,37 @@ public class ClassesManager {
 		return this.classesProperties.get(className);
 	}
 	
+	public boolean isClassOwner(UUID uuid, String className) {
+		String currentClassName = this.selectedClasses.get(uuid);
+		return currentClassName != null && currentClassName.equals(className);
+	}
+	
+	public boolean sendMessagesToAllPlayersInClass(String className, String[] messages) {
+		List<UUID> players = getPlayersInClass(className);
+		if (players == null) {
+			return false;
+		}
+		for (UUID uuid : players) {
+			Player player = Bukkit.getServer().getPlayer(uuid);
+			if (player != null) {
+				player.sendMessage(messages);
+			}
+		}
+		return true;
+	}
+	
+	public boolean sendMessagesToAllPlayersInClass(String className, String message) {
+		List<UUID> players = getPlayersInClass(className);
+		if (players == null) {
+			return false;
+		}
+		for (UUID uuid : players) {
+			Player player = Bukkit.getServer().getPlayer(uuid);
+			if (player != null) {
+				player.sendMessage(message);
+			}
+		}
+		return true;
+	}
+	
 }

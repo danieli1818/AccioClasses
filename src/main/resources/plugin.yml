@@ -8,3 +8,5 @@ api-version: 1.16
 commands:
     accioclasses:
         description: shows help page.
+    leave:
+        description: leave the class.
