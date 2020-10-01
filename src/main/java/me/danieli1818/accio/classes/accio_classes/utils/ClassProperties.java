@@ -7,9 +7,9 @@ public class ClassProperties {
 	private boolean isChatOn;
 	
 	public ClassProperties() {
-		this.hasStarted = true;
-		this.isChatOn = true;
-		this.isMagicOn = true;
+		this.hasStarted = false;
+		this.isChatOn = false;
+		this.isMagicOn = false;
 	}
 	
 	public void setHasStarted(boolean canPlayersJoin) {

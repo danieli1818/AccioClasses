@@ -1,10 +1,15 @@
 package me.danieli1818.accio.classes.accio_classes.commands.subcommands;
 
+import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 import me.danieli1818.accio.classes.accio_classes.commands.SubCommandsExecutor;
 import me.danieli1818.accio.classes.accio_classes.utils.ClassesManager;
+import net.md_5.bungee.api.chat.ClickEvent;
+import net.md_5.bungee.api.chat.HoverEvent;
+import net.md_5.bungee.api.chat.TextComponent;
+import net.md_5.bungee.api.chat.hover.content.Text;
 
 public class CreateSubCommand implements SubCommandsExecutor {
 	
@@ -26,6 +31,13 @@ public class CreateSubCommand implements SubCommandsExecutor {
 		String className = String.join(" ", args);
 		ClassesManager.getInstance().createClass(player, className);
 		ClassesManager.getInstance().selectClass(player.getUniqueId(), className);
+		sender.sendMessage("Successfully created class " + className);
+		TextComponent message = new TextComponent( "Class " + className + " is about to start. Click Me to join!" );
+		message.setClickEvent( new ClickEvent( ClickEvent.Action.RUN_COMMAND, "/accioclasses join " + className ) );
+		message.setHoverEvent( new HoverEvent( HoverEvent.Action.SHOW_TEXT, new Text( "Click Me to join class " + className + "!" ) ) );
+		for (Player currentPlayer : Bukkit.getServer().getOnlinePlayers()) {
+			currentPlayer.spigot().sendMessage(message);
+		}
 		return true;
 	}
 
