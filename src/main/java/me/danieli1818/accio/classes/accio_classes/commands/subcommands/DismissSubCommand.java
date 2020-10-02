@@ -34,14 +34,25 @@ public class DismissSubCommand implements SubCommandsExecutor {
 			player.sendMessage("Error no class has been selected!");
 			return false;
 		}
+		if (className.equals("-a")) {
+			for (String currentClassName : ClassesManager.getInstance().getAllClasses()) {
+				removeClass(currentClassName, player);
+			}
+			player.sendMessage("Dismissed All Classes!");
+			return true;
+		}
+		removeClass(className, player);
+		return true;
+	}
+	
+	private void removeClass(String className, Player sender) {
 		List<Player> players = ClassesManager.getInstance().getPlayersInClass(className)
 				.stream().map((UUID uuid)->Bukkit.getServer().getPlayer(uuid)).collect(Collectors.toList());
 		for (Player currentPlayer : players) {
 			currentPlayer.sendMessage("Class dismissed.");
 		}
 		ClassesManager.getInstance().forceRemoveClass(className);
-		player.sendMessage("Successfully dismissed class!");
-		return true;
+		sender.sendMessage("Successfully dismissed class \"" + className + "\"!");
 	}
 
 	@Override

@@ -32,7 +32,7 @@ public class TeleportSubCommand implements SubCommandsExecutor {
 		Location location = player.getLocation();
 		String className = ClassesManager.getInstance().getSelectedClass(player.getUniqueId());
 		if (args.length >= 1 && Arrays.asList(coordinatesAllies).contains(args[0])) {
-			if (args.length < 5) {
+			if (args.length < 4) {
 				sender.sendMessage("Missing Arguments!");
 				return false;
 			}
@@ -69,6 +69,7 @@ public class TeleportSubCommand implements SubCommandsExecutor {
 		for (Player currentPlayer : players) {
 			currentPlayer.teleport(location);
 		}
+		player.sendMessage("Successfully Teleported!");
 		return true;
 	}
 
