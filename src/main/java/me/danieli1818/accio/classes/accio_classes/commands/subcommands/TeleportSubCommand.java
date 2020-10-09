@@ -12,6 +12,7 @@ import org.bukkit.entity.Player;
 
 import me.danieli1818.accio.classes.accio_classes.commands.SubCommandsExecutor;
 import me.danieli1818.accio.classes.accio_classes.utils.ClassesManager;
+import me.danieli1818.accio.classes.accio_classes.utils.MessagesSender;
 
 public class TeleportSubCommand implements SubCommandsExecutor {
 	
@@ -25,7 +26,7 @@ public class TeleportSubCommand implements SubCommandsExecutor {
 	@Override
 	public boolean onCommand(CommandSender sender, String subCommand, String label, String[] args) {
 		if (!(sender instanceof Player)) {
-			sender.sendMessage("You have to be a player to run this command!");
+			MessagesSender.getInstance().sendMessage("You have to be a player to run this command!", sender);
 			return false;
 		}
 		Player player = (Player)sender;
@@ -33,7 +34,7 @@ public class TeleportSubCommand implements SubCommandsExecutor {
 		String className = ClassesManager.getInstance().getSelectedClass(player.getUniqueId());
 		if (args.length >= 1 && Arrays.asList(coordinatesAllies).contains(args[0])) {
 			if (args.length < 4) {
-				sender.sendMessage("Missing Arguments!");
+				MessagesSender.getInstance().sendMessage("Missing Arguments!", sender);
 				return false;
 			}
 			try {
@@ -41,7 +42,7 @@ public class TeleportSubCommand implements SubCommandsExecutor {
 				location.setY(Double.parseDouble(args[2]));
 				location.setZ(Double.parseDouble(args[3]));
 			} catch (NumberFormatException e) {
-				sender.sendMessage("Invalid Arguments! X, Y, Z has to be doubles!");
+				MessagesSender.getInstance().sendMessage("Invalid Arguments! X, Y, Z has to be doubles!", sender);
 				return false;
 			}
 			if (args.length >= 5) {
@@ -57,11 +58,11 @@ public class TeleportSubCommand implements SubCommandsExecutor {
 			}
 		}
 		if (className == null) {
-			player.sendMessage("Error no class has been selected!");
+			MessagesSender.getInstance().sendMessage("Error no class has been selected!", player);
 			return false;
 		}
 		if (ClassesManager.getInstance().getPlayersInClass(className) == null) {
-			player.sendMessage("Error class " + className + " doesn't exist!");
+			MessagesSender.getInstance().sendMessage("Error class " + className + " doesn't exist!", player);
 			return false;
 		}
 		List<Player> players = ClassesManager.getInstance().getPlayersInClass(className)
@@ -69,7 +70,7 @@ public class TeleportSubCommand implements SubCommandsExecutor {
 		for (Player currentPlayer : players) {
 			currentPlayer.teleport(location);
 		}
-		player.sendMessage("Successfully Teleported!");
+		MessagesSender.getInstance().sendMessage("Successfully Teleported!", player);
 		return true;
 	}
 

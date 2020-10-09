@@ -12,6 +12,7 @@ import com.elmakers.mine.bukkit.magic.MagicPlugin;
 
 import me.danieli1818.accio.classes.accio_classes.utils.ClassProperties;
 import me.danieli1818.accio.classes.accio_classes.utils.ClassesManager;
+import me.danieli1818.accio.classes.accio_classes.utils.MessagesSender;
 
 public class AccioClassesListener implements Listener {
 	
@@ -25,7 +26,7 @@ public class AccioClassesListener implements Listener {
 		ClassProperties properties = ClassesManager.getInstance().getProperties(className);
 		if (properties.hasStarted() && !properties.isChatOn() && !ClassesManager.getInstance().isClassOwner(player.getUniqueId(), className)) {
 			// TODO on/off magic and chat.
-			player.sendMessage("Chat is currently disabled!");
+			MessagesSender.getInstance().sendMessage("Chat is currently disabled!", player);
 			event.setCancelled(true);
 		}
 	}
@@ -41,7 +42,7 @@ public class AccioClassesListener implements Listener {
 		if (properties.hasStarted() && !properties.isMagicOn() && !ClassesManager.getInstance().isClassOwner(player.getUniqueId(), className)) {
 			// TODO on/off magic and chat.
 			if (MagicPlugin.getAPI().isWand(event.getItem())) {
-				player.sendMessage("Magic is currently disabled!");
+				MessagesSender.getInstance().sendMessage("Magic is currently disabled!", player);
 				event.setCancelled(true);
 			}
 		}

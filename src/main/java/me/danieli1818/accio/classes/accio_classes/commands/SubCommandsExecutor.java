@@ -2,6 +2,8 @@ package me.danieli1818.accio.classes.accio_classes.commands;
 
 import org.bukkit.command.CommandSender;
 
+import me.danieli1818.accio.classes.accio_classes.utils.MessagesSender;
+
 public interface SubCommandsExecutor {
 
 	public boolean onCommand(CommandSender sender, String subCommand, String label, String[] args);
@@ -12,10 +14,10 @@ public interface SubCommandsExecutor {
 	
 	default boolean onHelpCommand(CommandSender sender, int page) {
 		if (getHelp(page) == null) {
-			sender.sendMessage("Invalid page number!");
+			MessagesSender.getInstance().sendMessage("Invalid page number!", sender);
 			return false;
 		}
-		sender.sendMessage(getHelp(page));
+		MessagesSender.getInstance().sendMessage(getHelp(page), sender);
 		return true;
 	}
 	

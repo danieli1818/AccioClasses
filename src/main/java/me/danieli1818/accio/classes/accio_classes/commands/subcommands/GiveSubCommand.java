@@ -11,6 +11,7 @@ import org.bukkit.inventory.ItemStack;
 
 import me.danieli1818.accio.classes.accio_classes.commands.SubCommandsExecutor;
 import me.danieli1818.accio.classes.accio_classes.utils.ClassesManager;
+import me.danieli1818.accio.classes.accio_classes.utils.MessagesSender;
 
 public class GiveSubCommand implements SubCommandsExecutor {
 
@@ -23,7 +24,7 @@ public class GiveSubCommand implements SubCommandsExecutor {
 	@Override
 	public boolean onCommand(CommandSender sender, String subCommand, String label, String[] args) {
 		if (!(sender instanceof Player)) {
-			sender.sendMessage("You have to be a player to run this command!");
+			MessagesSender.getInstance().sendMessage("You have to be a player to run this command!", sender);
 			return false;
 		}
 		Player player = (Player)sender;
@@ -32,12 +33,12 @@ public class GiveSubCommand implements SubCommandsExecutor {
 			className = String.join(" ", args);
 		}
 		if (className == null) {
-			player.sendMessage("Error no class has been selected!");
+			MessagesSender.getInstance().sendMessage("Error no class has been selected!", player);
 			return false;
 		}
 		ItemStack itemStack = player.getInventory().getItemInMainHand();
 		if (itemStack == null) {
-			player.sendMessage("You hold no items!");
+			MessagesSender.getInstance().sendMessage("You hold no items!", player);
 			return false;
 		}
 		List<Player> players = ClassesManager.getInstance().getPlayersInClass(className)
@@ -45,7 +46,7 @@ public class GiveSubCommand implements SubCommandsExecutor {
 		for (Player currentPlayer : players) {
 			currentPlayer.getInventory().addItem(itemStack);
 		}
-		player.sendMessage("Successfully gave items!");
+		MessagesSender.getInstance().sendMessage("Successfully gave items!", player);
 		return true;
 	}
 

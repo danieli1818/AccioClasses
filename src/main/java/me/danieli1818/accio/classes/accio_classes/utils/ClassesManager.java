@@ -73,6 +73,7 @@ public class ClassesManager {
 			this.selectedClasses.remove(uuid);
 		}
 		removeAllPlayers(className);
+		this.playersInClass.remove(className);
 	}
 	
 	public String getSelectedClass(UUID uuid) {
@@ -83,10 +84,17 @@ public class ClassesManager {
 		return this.playersInClass.get(className).stream().map((Map.Entry<UUID, Location> entry)->entry.getKey()).collect(Collectors.toList());
 	}
 	
-	public void selectClass(UUID uuid, String className) {
+	public boolean selectClass(UUID uuid, String className) {
+		if (!getAllClasses().contains(className)) {
+			return false;
+		}
 		String prevClassName = getSelectedClass(uuid);
+		if (prevClassName.equals(className)) {
+			return true;
+		}
 		this.selectedClasses.put(uuid, className);
 		removeClass(prevClassName);
+		return true;
 	}
 	
 	public boolean addPlayerToClass(Player player, String className) {
@@ -187,7 +195,7 @@ public class ClassesManager {
 		for (UUID uuid : players) {
 			Player player = Bukkit.getServer().getPlayer(uuid);
 			if (player != null) {
-				player.sendMessage(messages);
+				MessagesSender.getInstance().sendMessage(messages, player);
 			}
 		}
 		return true;
@@ -201,7 +209,7 @@ public class ClassesManager {
 		for (UUID uuid : players) {
 			Player player = Bukkit.getServer().getPlayer(uuid);
 			if (player != null) {
-				player.sendMessage(message);
+				MessagesSender.getInstance().sendMessage(message, player);
 			}
 		}
 		return true;

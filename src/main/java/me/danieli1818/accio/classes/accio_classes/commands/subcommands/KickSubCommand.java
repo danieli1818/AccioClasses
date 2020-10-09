@@ -10,6 +10,7 @@ import org.bukkit.entity.Player;
 
 import me.danieli1818.accio.classes.accio_classes.commands.SubCommandsExecutor;
 import me.danieli1818.accio.classes.accio_classes.utils.ClassesManager;
+import me.danieli1818.accio.classes.accio_classes.utils.MessagesSender;
 
 public class KickSubCommand implements SubCommandsExecutor {
 
@@ -22,11 +23,11 @@ public class KickSubCommand implements SubCommandsExecutor {
 	@Override
 	public boolean onCommand(CommandSender sender, String subCommand, String label, String[] args) {
 		if (!(sender instanceof Player)) {
-			sender.sendMessage("You have to be a player to run this command!");
+			MessagesSender.getInstance().sendMessage("You have to be a player to run this command!", sender);
 			return false;
 		}
 		if (args.length < 1) {
-			sender.sendMessage("Missing Arguments! Use the help command for help!");
+			MessagesSender.getInstance().sendMessage("Missing Arguments! Use the help command for help!", sender);
 			return false;
 		}
 		Player player = (Player)sender;
@@ -36,14 +37,14 @@ public class KickSubCommand implements SubCommandsExecutor {
 			className = String.join(" ", args).split(" ", 1)[1];
 		}
 		if (className == null) {
-			player.sendMessage("Error no class has been selected!");
+			MessagesSender.getInstance().sendMessage("Error no class has been selected!", player);
 			return false;
 		}
 		if (!ClassesManager.getInstance().removePlayer(Bukkit.getServer().getPlayer(playerName).getUniqueId(), className)) {
-			player.sendMessage("Player " + playerName + " isn't in " + className + " class!");
+			MessagesSender.getInstance().sendMessage("Player " + playerName + " isn't in " + className + " class!", player);
 			return false;
 		}
-		player.sendMessage("Successfully kicked player " + playerName + "!");
+		MessagesSender.getInstance().sendMessage("Successfully kicked player " + playerName + "!", player);
 		return true;
 	}
 

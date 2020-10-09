@@ -10,6 +10,7 @@ import org.bukkit.entity.Player;
 
 import me.danieli1818.accio.classes.accio_classes.commands.SubCommandsExecutor;
 import me.danieli1818.accio.classes.accio_classes.utils.ClassesManager;
+import me.danieli1818.accio.classes.accio_classes.utils.MessagesSender;
 
 public class JoinSubCommand implements SubCommandsExecutor {
 	
@@ -25,20 +26,20 @@ public class JoinSubCommand implements SubCommandsExecutor {
 			return onHelpCommand(sender, 1);
 		}
 		if (!(sender instanceof Player)) {
-			sender.sendMessage("You have to be a player to run this command!");
+			MessagesSender.getInstance().sendMessage("You have to be a player to run this command!", sender);
 			return false;
 		}
 		Player player = (Player)sender;
 		String className = String.join(" ", args);
 		if (className == null) {
-			player.sendMessage("Error no class has been selected!");
+			MessagesSender.getInstance().sendMessage("Error no class has been selected!", player);
 			return false;
 		}
 		if (!ClassesManager.getInstance().addPlayerToClass(player, className)) {
-			player.sendMessage("You are already in class or class doesn't exist!");
+			MessagesSender.getInstance().sendMessage("You are already in class or class doesn't exist!", player);
 			return false;
 		}
-		player.sendMessage("Successfully joined class!");
+		MessagesSender.getInstance().sendMessage("Successfully joined class!", player);
 		return true;
 	}
 

@@ -11,6 +11,7 @@ import org.bukkit.inventory.ItemStack;
 
 import me.danieli1818.accio.classes.accio_classes.commands.SubCommandsExecutor;
 import me.danieli1818.accio.classes.accio_classes.utils.ClassesManager;
+import me.danieli1818.accio.classes.accio_classes.utils.MessagesSender;
 
 public class RunCommandSubCommand implements SubCommandsExecutor {
 	
@@ -26,14 +27,14 @@ public class RunCommandSubCommand implements SubCommandsExecutor {
 			return onHelpCommand(sender, 1);
 		}
 		if (!(sender instanceof Player)) {
-			sender.sendMessage("You have to be a player to run this command!");
+			MessagesSender.getInstance().sendMessage("You have to be a player to run this command!", sender);
 			return false;
 		}
 		Player player = (Player)sender;
 		String command = String.join(" ", args);
 		String className = ClassesManager.getInstance().getSelectedClass(player.getUniqueId());
 		if (className == null) {
-			player.sendMessage("Error no class has been selected!");
+			MessagesSender.getInstance().sendMessage("Error no class has been selected!", player);
 			return false;
 		}
 		List<Player> players = ClassesManager.getInstance().getPlayersInClass(className)

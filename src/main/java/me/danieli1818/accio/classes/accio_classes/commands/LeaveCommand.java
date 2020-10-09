@@ -6,26 +6,27 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 import me.danieli1818.accio.classes.accio_classes.utils.ClassesManager;
+import me.danieli1818.accio.classes.accio_classes.utils.MessagesSender;
 
 public class LeaveCommand implements CommandExecutor {
 
 	@Override
 	public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
 		if (!(sender instanceof Player)) {
-			sender.sendMessage("You must be a player to run this command!");
+			MessagesSender.getInstance().sendMessage("You must be a player to run this command!", sender);
 			return false;
 		}
 		Player player = (Player)sender;
 		String className = ClassesManager.getInstance().getClassIn(player.getUniqueId());
 		if (className != null) {
 			if (!sender.hasPermission("accio.classes.leave")) {
-				sender.sendMessage("You don't have permissions to run this command!");
+				MessagesSender.getInstance().sendMessage("You don't have permissions to run this command!", sender);
 			}
 			if (ClassesManager.getInstance().removePlayer(player.getUniqueId(), className)) {
-				player.sendMessage("Left class successfully!");
+				MessagesSender.getInstance().sendMessage("Left class successfully!", player);
 				return true;
 			} else {
-				player.sendMessage("There has been an error contact staff for help!");
+				MessagesSender.getInstance().sendMessage("There has been an error contact staff for help!", player);
 				return false;
 			}
 		}

@@ -5,6 +5,7 @@ import org.bukkit.entity.Player;
 
 import me.danieli1818.accio.classes.accio_classes.commands.SubCommandsExecutor;
 import me.danieli1818.accio.classes.accio_classes.utils.ClassesManager;
+import me.danieli1818.accio.classes.accio_classes.utils.MessagesSender;
 
 public class ToggleSubCommand implements SubCommandsExecutor {
 
@@ -19,7 +20,7 @@ public class ToggleSubCommand implements SubCommandsExecutor {
 			return onHelpCommand(sender, 1);
 		}
 		if (!(sender instanceof Player)) {
-			sender.sendMessage("You have to be a player to run this command!");
+			MessagesSender.getInstance().sendMessage("You have to be a player to run this command!", sender);
 			return false;
 		}
 		Player player = (Player)sender;
@@ -36,7 +37,7 @@ public class ToggleSubCommand implements SubCommandsExecutor {
 				chatOnOff = "off";
 				chatEnabled = "disabled";
 			}
-			player.sendMessage("Toggled chat " + chatOnOff + " successfully!");
+			MessagesSender.getInstance().sendMessage("Toggled chat " + chatOnOff + " successfully!", player);
 			ClassesManager.getInstance().sendMessagesToAllPlayersInClass(className, "Chat is now " + chatEnabled + "!");
 		} else if (command.equals("magic")) {
 			ClassesManager.getInstance().toggleMagic(className);
@@ -46,10 +47,10 @@ public class ToggleSubCommand implements SubCommandsExecutor {
 				magicOnOff = "off";
 				magicEnabled = "disabled";
 			}
-			player.sendMessage("Toggled magic " + magicOnOff + " successfully!");
+			MessagesSender.getInstance().sendMessage("Toggled magic " + magicOnOff + " successfully!", player);
 			ClassesManager.getInstance().sendMessagesToAllPlayersInClass(className, "Magic is now " + magicEnabled + "!");
 		} else {
-			player.sendMessage("Invalid Command! Use help command for help!");
+			MessagesSender.getInstance().sendMessage("Invalid Command! Use help command for help!", player);
 			return false;
 		}
 		return true;

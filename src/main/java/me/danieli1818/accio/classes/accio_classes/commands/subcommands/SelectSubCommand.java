@@ -1,56 +1,52 @@
 package me.danieli1818.accio.classes.accio_classes.commands.subcommands;
 
-import java.util.List;
-import java.util.UUID;
-import java.util.stream.Collectors;
+import java.util.Collection;
 
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
-import org.bukkit.inventory.ItemStack;
 
 import me.danieli1818.accio.classes.accio_classes.commands.SubCommandsExecutor;
 import me.danieli1818.accio.classes.accio_classes.utils.ClassesManager;
 import me.danieli1818.accio.classes.accio_classes.utils.MessagesSender;
 
-public class StartSubCommand implements SubCommandsExecutor {
+public class SelectSubCommand implements SubCommandsExecutor {
 
 	private String prefix;
 	
-	public StartSubCommand(String prefix) {
+	public SelectSubCommand(String prefix) {
 		this.prefix = prefix;
 	}
-	
-	@Override
+
 	public boolean onCommand(CommandSender sender, String subCommand, String label, String[] args) {
 		if (!(sender instanceof Player)) {
 			MessagesSender.getInstance().sendMessage("You have to be a player to run this command!", sender);
 			return false;
 		}
+		if (args.length < 1) {
+			Collection<String> classes = ClassesManager.getInstance().getAllClasses();
+			MessagesSender.getInstance().sendMessage(classes.toArray(new String[0]), sender);
+			return true;
+		}
 		Player player = (Player)sender;
-		String className = ClassesManager.getInstance().getSelectedClass(player.getUniqueId());
-		if (args.length >= 1) {
-			className = String.join(" ", args);
+		String className = String.join(" ", args);
+		if (ClassesManager.getInstance().selectClass(player.getUniqueId(), className)) {
+			MessagesSender.getInstance().sendMessage("Successfully selected class " + className, sender);
+		} else {
+			MessagesSender.getInstance().sendMessage("Class " + className + " doesn't exist!", sender);
 		}
-		if (className == null) {
-			MessagesSender.getInstance().sendMessage("Error no class has been selected!", player);
-			return false;
-		}
-		ClassesManager.getInstance().startClass(className);
-		MessagesSender.getInstance().sendMessage("Successfully started class!", player);
 		return true;
 	}
 
-	@Override
 	public String getDescription() {
-		return "Start class and prevent more students to join it.";
+		// TODO Auto-generated method stub
+		return "Selects a class!";
 	}
 
-	@Override
 	public String[] getHelp(int page) {
 		if (page == 1) {
 			String[] helpMessages = new String[1];
-			helpMessages[0] = this.prefix + " {class name} - " + getDescription();
+			helpMessages[0] = this.prefix + " [class name] - " + getDescription();
 			return helpMessages;
 		}
 		return null;

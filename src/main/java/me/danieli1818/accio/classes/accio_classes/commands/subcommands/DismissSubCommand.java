@@ -10,6 +10,7 @@ import org.bukkit.entity.Player;
 
 import me.danieli1818.accio.classes.accio_classes.commands.SubCommandsExecutor;
 import me.danieli1818.accio.classes.accio_classes.utils.ClassesManager;
+import me.danieli1818.accio.classes.accio_classes.utils.MessagesSender;
 
 public class DismissSubCommand implements SubCommandsExecutor {
 
@@ -22,7 +23,7 @@ public class DismissSubCommand implements SubCommandsExecutor {
 	@Override
 	public boolean onCommand(CommandSender sender, String subCommand, String label, String[] args) {
 		if (!(sender instanceof Player)) {
-			sender.sendMessage("You have to be a player to run this command!");
+			MessagesSender.getInstance().sendMessage("You have to be a player to run this command!", sender);
 			return false;
 		}
 		Player player = (Player)sender;
@@ -31,14 +32,14 @@ public class DismissSubCommand implements SubCommandsExecutor {
 			className = String.join(" ", args);
 		}
 		if (className == null) {
-			player.sendMessage("Error no class has been selected!");
+			MessagesSender.getInstance().sendMessage("Error no class has been selected!", player);
 			return false;
 		}
 		if (className.equals("-a")) {
 			for (String currentClassName : ClassesManager.getInstance().getAllClasses()) {
 				removeClass(currentClassName, player);
 			}
-			player.sendMessage("Dismissed All Classes!");
+			MessagesSender.getInstance().sendMessage("Dismissed All Classes!", player);
 			return true;
 		}
 		removeClass(className, player);
@@ -49,10 +50,10 @@ public class DismissSubCommand implements SubCommandsExecutor {
 		List<Player> players = ClassesManager.getInstance().getPlayersInClass(className)
 				.stream().map((UUID uuid)->Bukkit.getServer().getPlayer(uuid)).collect(Collectors.toList());
 		for (Player currentPlayer : players) {
-			currentPlayer.sendMessage("Class dismissed.");
+			MessagesSender.getInstance().sendMessage("Class dismissed.", currentPlayer);
 		}
 		ClassesManager.getInstance().forceRemoveClass(className);
-		sender.sendMessage("Successfully dismissed class \"" + className + "\"!");
+		MessagesSender.getInstance().sendMessage("Successfully dismissed class \"" + className + "\"!", sender);
 	}
 
 	@Override

@@ -14,7 +14,9 @@ import me.danieli1818.accio.classes.accio_classes.commands.subcommands.JoinSubCo
 import me.danieli1818.accio.classes.accio_classes.commands.subcommands.KickSubCommand;
 import me.danieli1818.accio.classes.accio_classes.commands.subcommands.TeleportSubCommand;
 import me.danieli1818.accio.classes.accio_classes.commands.subcommands.ToggleSubCommand;
+import me.danieli1818.accio.classes.accio_classes.utils.MessagesSender;
 import me.danieli1818.accio.classes.accio_classes.commands.subcommands.RunCommandSubCommand;
+import me.danieli1818.accio.classes.accio_classes.commands.subcommands.SelectSubCommand;
 import me.danieli1818.accio.classes.accio_classes.commands.subcommands.StartSubCommand;
 
 public class AccioClassesCommands implements CommandExecutor {
@@ -32,22 +34,23 @@ public class AccioClassesCommands implements CommandExecutor {
 		this.subCommands.put("kick", new KickSubCommand("/accioclasses kick"));
 		this.subCommands.put("dismiss", new DismissSubCommand("/accioclasses dismiss"));
 		this.subCommands.put("toggle", new ToggleSubCommand("/accioclasses toggle"));
+		this.subCommands.put("select", new SelectSubCommand("/accioclasses select"));
 	}
 
 	public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
 		if (!sender.hasPermission("accio.classes.commands")) {
-			sender.sendMessage("You don't have permissions to run this command!");
+			MessagesSender.getInstance().sendMessage("You don't have permissions to run this command!", sender);
 		}
 		if (args.length < 1) {
 			onHelpCommand(1);
 			return true;
 		}
 		if (!sender.hasPermission("accio.classes.commands." + args[0].toLowerCase())) {
-			sender.sendMessage("You don't have permissions to run this command!");
+			MessagesSender.getInstance().sendMessage("You don't have permissions to run this command!", sender);
 		}
 		SubCommandsExecutor executor = this.subCommands.get(args[0].toLowerCase());
 		if (executor == null) {
-			sender.sendMessage("Invalid sub command type /help for help!");
+			MessagesSender.getInstance().sendMessage("Invalid sub command type /help for help!", sender);
 			return false;
 		}
 		String[] arguments = new String[args.length - 1];
