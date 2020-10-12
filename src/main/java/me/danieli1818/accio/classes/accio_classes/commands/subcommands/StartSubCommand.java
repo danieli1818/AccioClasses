@@ -36,6 +36,10 @@ public class StartSubCommand implements SubCommandsExecutor {
 			MessagesSender.getInstance().sendMessage("Error no class has been selected!", player);
 			return false;
 		}
+		if (!ClassesManager.getInstance().doesClassExist(className)) {
+			MessagesSender.getInstance().sendMessage("Error no class like this exists!", player);
+			return false;
+		}
 		ClassesManager.getInstance().startClass(className);
 		MessagesSender.getInstance().sendMessage("Successfully started class!", player);
 		return true;

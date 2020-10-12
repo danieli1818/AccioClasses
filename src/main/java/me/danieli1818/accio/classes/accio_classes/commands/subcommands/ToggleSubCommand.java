@@ -29,6 +29,18 @@ public class ToggleSubCommand implements SubCommandsExecutor {
 		if (args.length > 1) {
 			className = String.join(" ", args).split(" ", 2)[1];
 		}
+		if (className == null) {
+			MessagesSender.getInstance().sendMessage("Error no class has been selected!", player);
+			return false;
+		}
+		if (!ClassesManager.getInstance().doesClassExist(className)) {
+			MessagesSender.getInstance().sendMessage("Error no class like this exists!", player);
+			return false;
+		}
+		if (!ClassesManager.getInstance().getProperties(className).hasStarted()) {
+			MessagesSender.getInstance().sendMessage("Error class " + className + " hasn't started yet!", player);
+			return false;
+		}
 		if (command.equals("chat")) {
 			ClassesManager.getInstance().toggleChat(className);
 			String chatOnOff = "on";

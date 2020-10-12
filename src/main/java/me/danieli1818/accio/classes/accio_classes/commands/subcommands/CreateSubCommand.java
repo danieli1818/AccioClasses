@@ -30,6 +30,10 @@ public class CreateSubCommand implements SubCommandsExecutor {
 		}
 		Player player = (Player)sender;
 		String className = String.join(" ", args);
+		if (ClassesManager.getInstance().doesClassExist(className)) {
+			MessagesSender.getInstance().sendMessage("Error class with the same name exists!", player);
+			return false;
+		}
 		ClassesManager.getInstance().createClass(player, className);
 		ClassesManager.getInstance().selectClass(player.getUniqueId(), className);
 		MessagesSender.getInstance().sendMessage("Successfully created class " + className, player);

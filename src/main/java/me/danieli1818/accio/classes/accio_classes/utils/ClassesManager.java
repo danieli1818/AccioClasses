@@ -101,6 +101,9 @@ public class ClassesManager {
 		if (this.classesProperties.get(className).hasStarted() || getClassIn(player.getUniqueId()) != null) {
 			return false;
 		}
+		if (getClassIn(player.getUniqueId()) != null) {
+			return false;
+		}
 		List<UUID> players = getPlayersInClass(className);
 		if (players == null) {
 			return false;
@@ -113,7 +116,7 @@ public class ClassesManager {
 	}
 	
 	public boolean startClass(String className) {
-		if (this.classesProperties.get(className).hasStarted()) {
+		if (!this.classesProperties.get(className).hasStarted()) {
 			for (Map.Entry<UUID, Location> entry : this.playersInClass.get(className)) {
 				entry.setValue(Bukkit.getServer().getPlayer(entry.getKey()).getLocation());
 			}
@@ -217,6 +220,10 @@ public class ClassesManager {
 	
 	public Set<String> getAllClasses() {
 		return this.playersInClass.keySet();
+	}
+	
+	public boolean doesClassExist(String className) {
+		return this.playersInClass.containsKey(className);
 	}
 	
 }

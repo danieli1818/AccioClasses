@@ -35,8 +35,12 @@ public class JoinSubCommand implements SubCommandsExecutor {
 			MessagesSender.getInstance().sendMessage("Error no class has been selected!", player);
 			return false;
 		}
+		if (!ClassesManager.getInstance().doesClassExist(className)) {
+			MessagesSender.getInstance().sendMessage("Error no class like this exists!", player);
+			return false;
+		}
 		if (!ClassesManager.getInstance().addPlayerToClass(player, className)) {
-			MessagesSender.getInstance().sendMessage("You are already in class or class doesn't exist!", player);
+			MessagesSender.getInstance().sendMessage("You are already in class!", player);
 			return false;
 		}
 		MessagesSender.getInstance().sendMessage("Successfully joined class!", player);

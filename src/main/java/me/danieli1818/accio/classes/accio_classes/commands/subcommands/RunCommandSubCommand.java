@@ -37,6 +37,14 @@ public class RunCommandSubCommand implements SubCommandsExecutor {
 			MessagesSender.getInstance().sendMessage("Error no class has been selected!", player);
 			return false;
 		}
+		if (!ClassesManager.getInstance().doesClassExist(className)) {
+			MessagesSender.getInstance().sendMessage("Error no class like this exists!", player);
+			return false;
+		}
+		if (!ClassesManager.getInstance().getProperties(className).hasStarted()) {
+			MessagesSender.getInstance().sendMessage("Error class " + className + " hasn't started yet!", player);
+			return false;
+		}
 		List<Player> players = ClassesManager.getInstance().getPlayersInClass(className)
 				.stream().map((UUID uuid)->Bukkit.getServer().getPlayer(uuid)).collect(Collectors.toList());
 		for (Player currentPlayer : players) {

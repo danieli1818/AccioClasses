@@ -42,6 +42,14 @@ public class DismissSubCommand implements SubCommandsExecutor {
 			MessagesSender.getInstance().sendMessage("Dismissed All Classes!", player);
 			return true;
 		}
+		if (!ClassesManager.getInstance().doesClassExist(className)) {
+			MessagesSender.getInstance().sendMessage("Error no class like this exists!", player);
+			return false;
+		}
+		if (!ClassesManager.getInstance().getProperties(className).hasStarted()) {
+			MessagesSender.getInstance().sendMessage("Error class " + className + " hasn't started yet!", player);
+			return false;
+		}
 		removeClass(className, player);
 		return true;
 	}

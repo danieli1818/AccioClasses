@@ -40,6 +40,14 @@ public class KickSubCommand implements SubCommandsExecutor {
 			MessagesSender.getInstance().sendMessage("Error no class has been selected!", player);
 			return false;
 		}
+		if (!ClassesManager.getInstance().doesClassExist(className)) {
+			MessagesSender.getInstance().sendMessage("Error no class like this exists!", player);
+			return false;
+		}
+		if (!ClassesManager.getInstance().getProperties(className).hasStarted()) {
+			MessagesSender.getInstance().sendMessage("Error class " + className + " hasn't started yet!", player);
+			return false;
+		}
 		if (!ClassesManager.getInstance().removePlayer(Bukkit.getServer().getPlayer(playerName).getUniqueId(), className)) {
 			MessagesSender.getInstance().sendMessage("Player " + playerName + " isn't in " + className + " class!", player);
 			return false;
