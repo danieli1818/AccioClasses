@@ -51,7 +51,8 @@ public class KickSubCommand implements SubCommandsExecutor {
 			MessagesSender.getInstance().sendMessage("Error class " + className + " hasn't started yet!", player);
 			return false;
 		}
-		if (!ClassesManager.getInstance().removePlayer(Bukkit.getServer().getPlayer(playerName).getUniqueId(), className)) {
+		Player playerBeingKicked = Bukkit.getServer().getPlayer(playerName);
+		if (playerBeingKicked == null || !ClassesManager.getInstance().removePlayer(playerBeingKicked.getUniqueId(), className)) {
 			MessagesSender.getInstance().sendMessage("Player " + playerName + " isn't in " + className + " class!", player);
 			return false;
 		}
