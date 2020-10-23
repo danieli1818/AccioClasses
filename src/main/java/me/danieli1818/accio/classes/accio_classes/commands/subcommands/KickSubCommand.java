@@ -34,7 +34,10 @@ public class KickSubCommand implements SubCommandsExecutor {
 		String className = ClassesManager.getInstance().getSelectedClass(player.getUniqueId());
 		String playerName = args[0];
 		if (args.length >= 2) {
-			className = String.join(" ", args).split(" ", 1)[1];
+			String[] argsSpacesArray = String.join(" ", args).split(" ", 1);
+			if (argsSpacesArray.length > 1) {
+				className = String.join(" ", args).split(" ", 1)[1];
+			}
 		}
 		if (className == null) {
 			MessagesSender.getInstance().sendMessage("Error no class has been selected!", player);
