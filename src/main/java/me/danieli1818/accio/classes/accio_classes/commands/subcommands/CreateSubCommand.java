@@ -1,0 +1,63 @@
+package me.danieli1818.accio.classes.accio_classes.commands.subcommands;
+
+import org.bukkit.Bukkit;
+import org.bukkit.command.CommandSender;
+import org.bukkit.entity.Player;
+
+import me.danieli1818.accio.classes.accio_classes.commands.SubCommandsExecutor;
+import me.danieli1818.accio.classes.accio_classes.utils.ClassesManager;
+import me.danieli1818.accio.classes.accio_classes.utils.MessagesSender;
+import net.md_5.bungee.api.chat.ClickEvent;
+import net.md_5.bungee.api.chat.ComponentBuilder;
+import net.md_5.bungee.api.chat.HoverEvent;
+import net.md_5.bungee.api.chat.TextComponent;
+
+public class CreateSubCommand implements SubCommandsExecutor {
+	
+	private String prefix;
+	
+	public CreateSubCommand(String prefix) {
+		this.prefix = prefix;
+	}
+
+	public boolean onCommand(CommandSender sender, String subCommand, String label, String[] args) {
+		if (args.length < 1) {
+			return onHelpCommand(sender, 1);
+		}
+		if (!(sender instanceof Player)) {
+			sender.sendMessage("You have to be a player to run this command!");
+			return false;
+		}
+		Player player = (Player)sender;
+		String className = String.join(" ", args);
+		if (ClassesManager.getInstance().doesClassExist(className)) {
+			MessagesSender.getInstance().sendMessage("Error class with the same name exists!", player);
+			return false;
+		}
+		ClassesManager.getInstance().createClass(player, className);
+		ClassesManager.getInstance().selectClass(player.getUniqueId(), className);
+		MessagesSender.getInstance().sendMessage("Successfully created class " + className, player);
+		TextComponent message = new TextComponent( className + " class is about to start. Click Me to join!" );
+		message.setClickEvent( new ClickEvent( ClickEvent.Action.RUN_COMMAND, "/accioclasses join " + className ) );
+		message.setHoverEvent( new HoverEvent( HoverEvent.Action.SHOW_TEXT, new ComponentBuilder( "Click Me to join class " + className + "!" ).create() ) );
+		for (Player currentPlayer : Bukkit.getServer().getOnlinePlayers()) {
+			MessagesSender.getInstance().sendMessage(message, currentPlayer);
+		}
+		return true;
+	}
+
+	public String getDescription() {
+		// TODO Auto-generated method stub
+		return "Creates a class!";
+	}
+
+	public String[] getHelp(int page) {
+		if (page == 1) {
+			String[] helpMessages = new String[1];
+			helpMessages[0] = this.prefix + " [class name] - " + getDescription();
+			return helpMessages;
+		}
+		return null;
+	}
+
+}
