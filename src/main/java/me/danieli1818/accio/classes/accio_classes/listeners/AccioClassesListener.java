@@ -53,7 +53,6 @@ public class AccioClassesListener implements Listener {
 	
 	@EventHandler
 	public void onPreCastEvent(PreCastEvent event) {
-		
 		Player player = event.getMage().getPlayer();
 		String className = ClassesManager.getInstance().getClassIn(player.getUniqueId());
 		if (className == null) {
